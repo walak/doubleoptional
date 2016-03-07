@@ -9,26 +9,24 @@ import java.util.function.Supplier;
 import static org.junit.Assert.assertEquals;
 
 
-public class DoubleOptionalValueTest {
+public class DoubleOptionalValueTest extends DoubleOptionalBasicTest{
 
-    private Integer valueA = 20;
-    private String valueB = "TestString";
 
     @Test
     public void shouldReturnValuesPassed() {
-        DoubleOptional<Integer, String> integerStringDoubleOptional = DoubleOptional.ofValues(valueA, valueB);
+        DoubleOptional<Integer, String> doubleOptional = DoubleOptional.ofValues(valueA, valueB);
 
-        assertEquals(valueA, integerStringDoubleOptional.getA());
-        assertEquals(valueB, integerStringDoubleOptional.getB());
+        assertEquals(valueA, doubleOptional.getA());
+        assertEquals(valueB, doubleOptional.getB());
     }
 
     @Test
     public void shouldReturnValuesPassedAsOptionals() {
-        DoubleOptional<Integer, String> integerStringDoubleOptional = DoubleOptional
+        DoubleOptional<Integer, String> doubleOptional = DoubleOptional
                 .ofOptionals(Optional.of(valueA), Optional.of(valueB));
 
-        assertEquals(valueA, integerStringDoubleOptional.getA());
-        assertEquals(valueB, integerStringDoubleOptional.getB());
+        assertEquals(valueA, doubleOptional.getA());
+        assertEquals(valueB, doubleOptional.getB());
     }
 
     @Test(expected = NoSuchElementException.class)

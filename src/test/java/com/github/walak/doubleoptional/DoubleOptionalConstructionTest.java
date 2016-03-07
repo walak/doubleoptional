@@ -6,10 +6,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 
-public class DoubleOptionalConstructionTest {
-
-    private Integer valueA = 20;
-    private String valueB = "TestString";
+public class DoubleOptionalConstructionTest extends DoubleOptionalBasicTest {
 
     @Test
     public void shouldCreateDoubleOptionalOfTwoValues() {
@@ -20,9 +17,7 @@ public class DoubleOptionalConstructionTest {
 
     @Test
     public void shouldCreateDoubleOptionalOfTwoOptionals() {
-        Optional<Integer> integerOptional = Optional.of(valueA);
-        Optional<String> stringOptional = Optional.of(valueB);
-        DoubleOptional<Integer, String> integerStringDoubleOptional = DoubleOptional.ofOptionals(integerOptional, stringOptional);
+        DoubleOptional<Integer, String> integerStringDoubleOptional = DoubleOptional.ofOptionals(optionalA, optionalB);
 
         assertNotNull(integerStringDoubleOptional);
     }
@@ -40,12 +35,12 @@ public class DoubleOptionalConstructionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowToCreateFromOptionalAndNull() {
-        DoubleOptional.ofOptionals(Optional.empty(), null);
+        DoubleOptional.ofOptionals(empty(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowToCreateFromNullAndOptional() {
-        DoubleOptional.ofOptionals(Optional.empty(), null);
+        DoubleOptional.ofOptionals(empty(), null);
     }
 
 

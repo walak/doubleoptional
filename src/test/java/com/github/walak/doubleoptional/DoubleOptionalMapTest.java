@@ -3,13 +3,11 @@ package com.github.walak.doubleoptional;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.Optional;
 
-public class DoubleOptionalMapTest {
+import static org.junit.Assert.*;
 
-    private Integer valueA = 20;
-    private String valueB = "TestString";
+public class DoubleOptionalMapTest extends DoubleOptionalBasicTest {
 
 
     @Test
@@ -24,11 +22,36 @@ public class DoubleOptionalMapTest {
 
     @Test
     public void shouldNotMapOptionalWhenEmptyValues() {
-        DoubleOptional<Integer, String> firstOptional = DoubleOptional.ofValues(null, valueB);
+        DoubleOptional<Integer, String> firstOptional = DoubleOptional.ofOptionals(empty(), optionalB);
         DoubleOptional<String, Integer> mappedOptional = firstOptional
                 .map((a, b) -> DoubleOptional.ofValues(b, a));
 
         assertTrue(mappedOptional.isEmpty());
     }
 
+
+    @Test
+    public void shouldMapToSingleOptional() {
+        DoubleOptional<Integer, String> firstOptional = DoubleOptional.ofValues(valueA, valueB);
+        Integer integer = firstOptional
+                .mapSingle((a, b) -> a)
+                .get();
+
+        assertEquals(valueA, integer);
+    }
+
+    @Test
+    public void shouldNotMapToSingleIfAnyMissing() {
+        DoubleOptional<Integer, String> firstOptional = DoubleOptional.ofOptionals(optionalA, empty());
+        DoubleOptional<Integer, String> secondOptional = DoubleOptional.ofOptionals(empty(), optionalB);
+        DoubleOptional<Integer, String> thirdOptional = DoubleOptional.empty();
+
+        Optional<Integer> optInteger = firstOptional.mapSingle((a, b) -> a);
+        Optional<String> optString = secondOptional.mapSingle((a, b) -> b);
+        Optional<Object> optObject = thirdOptional.mapSingle((a, b) -> new Object());
+
+        assertFalse(optInteger.isPresent());
+        assertFalse(optString.isPresent());
+        assertFalse(optObject.isPresent());
+    }
 }
