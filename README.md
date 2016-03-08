@@ -34,7 +34,7 @@ You can create an instance of `DoubleOptional` in two ways:
 
 1. Initialize with raw values:
 
-```
+```java
 String string = "Example";
 Integer value = null;
 
